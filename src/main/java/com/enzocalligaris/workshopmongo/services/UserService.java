@@ -1,6 +1,7 @@
 package com.enzocalligaris.workshopmongo.services;
 
 import com.enzocalligaris.workshopmongo.domain.User;
+import com.enzocalligaris.workshopmongo.dto.UserDTO;
 import com.enzocalligaris.workshopmongo.repository.UserRepository;
 import com.enzocalligaris.workshopmongo.services.exception.ObjectnotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,13 @@ public class UserService {
     public User findById(String id){
         Optional<User> obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectnotFoundException("Objeto não Encontrado"));
+    }
+
+    public User insert(User obj){
+        return repo.insert(obj);
+    }
+
+    public User fromDTO(UserDTO objDTO){
+        return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
     }
 }
