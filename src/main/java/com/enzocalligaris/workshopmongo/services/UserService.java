@@ -3,7 +3,7 @@ package com.enzocalligaris.workshopmongo.services;
 import com.enzocalligaris.workshopmongo.domain.User;
 import com.enzocalligaris.workshopmongo.dto.UserDTO;
 import com.enzocalligaris.workshopmongo.repository.UserRepository;
-import com.enzocalligaris.workshopmongo.services.exception.ObjectnotFoundException;
+import com.enzocalligaris.workshopmongo.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class UserService {
 
     public User findById(String id){
         Optional<User> obj = repo.findById(id);
-        return obj.orElseThrow(() -> new ObjectnotFoundException("Objeto não Encontrado"));
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não Encontrado"));
     }
 
     public User insert(User obj){
