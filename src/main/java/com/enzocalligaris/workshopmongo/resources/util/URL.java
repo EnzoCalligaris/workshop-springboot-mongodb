@@ -2,10 +2,11 @@ package com.enzocalligaris.workshopmongo.resources.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class URL {
 
@@ -17,12 +18,12 @@ public class URL {
         }
     }
 
-    public static Date convertDate(String textDate, Date defaultValue){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+    public static Instant convertDate(String textDate, Instant defaultValue) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
-            return sdf.parse(textDate);
-        } catch (ParseException e) {
+            LocalDate localDate = LocalDate.parse(textDate, formatter);
+            return localDate.atStartOfDay().toInstant(ZoneOffset.UTC);
+        } catch (DateTimeParseException e) {
             return defaultValue;
         }
     }
